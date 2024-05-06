@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        .main-heading {
+            text-align: center;
+            margin-top: 20px;
+            color: red;
+        }
+
+        .list-container {
+            height: 400px;
+            width: 400px;
+            margin: 20px auto;
+            background-color: #d24076;
+            border: 2px solid black;
+        }
+
+        .todo-input {
+            height: 70px;
+         background-color: #d597df;
+            display: block;
+            margin: 10px auto;
+            width: 250px;
+        }
+
+        .todoItem {
+            background-color: #d597df;
+            border-radius: 20px;
+            color: black;
+            font-size: 18px;
+            padding: 10px 20px;
+
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        .todo-add {
+            background-color: rgb(102, 57, 57);
+            color: white;
+            cursor: pointer;
+            padding: 10px 40px;
+            border-radius: 20px;
+            font-size: 18px;
+            display: block;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="main-heading">Todo List</h1>
+    <div class="list-container" id="list-container">
+
+    </div>
+    <div class="action-container">
+        <input type="text" id="todo-element" class="todo-input" >
+        <button class="todo-add" onclick="add()">Add</button>
+    </div>
+
+
+    <script>
+
+        let todoList = [];
+
+        const listFromLocalStorage = localStorage.getItem("todoList");
+        if (listFromLocalStorage) {
+            todoList = JSON.parse(listFromLocalStorage);
+            renderToDoList();
+        }
+
+
+        function add() {
+            const inputElement = document.getElementById('todo-element');
+            todoList.push(inputElement.value);
+
+            localStorage.setItem("todoList", JSON.stringify(todoList));
+    
+            inputElement.value = "";
+
+            renderToDoList();
+        }
+
+        function renderToDoList() {
+            const listContainer = document.getElementById('list-container');
+            listContainer.innerHTML = "";
+
+            for (const todoItem of todoList) {
+                listContainer.innerHTML += `<div class="todoItem">${todoItem}</div>`;
+            }
+        }
+
+    </script>
+</body>
+
+</html>
